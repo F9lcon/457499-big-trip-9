@@ -19,7 +19,10 @@ const renderComponent = (element, component, position = `beforeend`) => {
 };
 
 const renderContent = () => {
+  renderComponent(eventsElement, createTripList());
   const tripListElement = document.querySelector(`.trip-events__list`);
+  renderComponent(tripListElement, createTripEditForm());
+
   for (let i = 0; i < 3; i++) {
     renderComponent(tripListElement, createTrip());
   }
@@ -30,8 +33,6 @@ const renderAllComponents = () => {
   renderComponent(menuHeaderElement, createMenu(), `afterend`);
   renderComponent(tripControlsElement, createFilter());
   renderComponent(eventsElement, createSortForm());
-  renderComponent(eventsElement, createTripEditForm());
-  renderComponent(eventsElement, createTripList());
   renderContent();
 };
 
