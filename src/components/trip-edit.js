@@ -1,7 +1,19 @@
-export const createTripEditForm = () => {
-  return `
-          <li class="trip-events__item">
-            <form class="trip-events__item  event  event--edit" action="#" method="post">
+import {createElement} from "../utils";
+
+export class TripEditForm {
+  constructor() {
+    this._element = null;
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  getTemplate() {
+    return `<form class="trip-events__item  event  event--edit" action="#" method="post">
             <header class="event__header">
               <div class="event__type-wrapper">
                 <label class="event__type  event__type-btn" for="event-type-toggle-1">
@@ -176,6 +188,7 @@ export const createTripEditForm = () => {
               </div>
             </section>
           </section>
-          </form>
-       </li>`;
-};
+          </form>`;
+
+  }
+}
