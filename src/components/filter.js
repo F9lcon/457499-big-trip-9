@@ -1,6 +1,6 @@
 import {createElement} from "../utils";
 
-export class Filter {
+export default class Filter {
   constructor(list) {
     this._list = list;
     this._element = null;
@@ -11,6 +11,12 @@ export class Filter {
       this._element = createElement(this.getTemplate());
     }
     return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
   }
 
   getTemplate() {

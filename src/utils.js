@@ -20,7 +20,6 @@ const render = (container, element, place) => {
   }
 };
 
-// не очень понимаю пункт 7 задания про метод удаления элементов. где он должен использоваться.
 // const unrender = (element) => {
 //   if (element) {
 //     element.remove();

@@ -1,6 +1,6 @@
 import {createElement} from "../utils";
 
-export class TripList {
+export default class TripList {
   constructor() {
     this._element = null;
   }
@@ -10,6 +10,12 @@ export class TripList {
       this._element = createElement(this.getTemplate());
     }
     return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
   }
 
   getTemplate() {

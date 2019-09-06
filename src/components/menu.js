@@ -1,6 +1,6 @@
 import {createElement} from "../utils";
 
-export class Menu {
+export default class Menu {
   constructor([table, stats]) {
     this._table = table;
     this._stats = stats;
@@ -13,6 +13,13 @@ export class Menu {
     }
     return this._element;
   }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
+  }
+
   getTemplate() {
     return `<h2 class="visually-hidden">Switch trip view</h2>
      <nav class="trip-controls__trip-tabs  trip-tabs">

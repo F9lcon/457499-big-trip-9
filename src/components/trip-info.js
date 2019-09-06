@@ -1,6 +1,6 @@
 import {createElement} from "../utils";
 
-export class TripInfo {
+export default class TripInfo {
   constructor(cities, dates) {
     this._cities = cities;
     this._dates = dates;
@@ -12,6 +12,12 @@ export class TripInfo {
       this._element = createElement(this.getTemplate());
     }
     return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
   }
 
   getTemplate() {

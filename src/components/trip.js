@@ -1,6 +1,6 @@
 import {createElement} from "../utils";
 
-export class Trip {
+export default class Trip {
   constructor({type, city, time, price}) {
     this._type = type;
     this._city = city;
@@ -14,6 +14,12 @@ export class Trip {
       this._element = createElement(this.getTemplate());
     }
     return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
   }
 
   getTemplate() {

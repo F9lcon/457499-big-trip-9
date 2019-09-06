@@ -1,7 +1,8 @@
 import {createElement} from "../utils";
 
-export class TripEditForm {
-  constructor() {
+export default class TripEditForm {
+  constructor({city}) {
+    this._city = city;
     this._element = null;
   }
 
@@ -10,6 +11,12 @@ export class TripEditForm {
       this._element = createElement(this.getTemplate());
     }
     return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
   }
 
   getTemplate() {
@@ -87,7 +94,7 @@ export class TripEditForm {
                 <label class="event__label  event__type-output" for="event-destination-1">
                   Sightseeing at
                 </label>
-                <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value="" list="destination-list-1">
+                <input class="event__input  event__input--destination" id="event-destination-1" type="text" name="event-destination" value= "${this._city}" list="destination-list-1">
                 <datalist id="destination-list-1">
                   <option value="Amsterdam"></option>
                   <option value="Geneva"></option>
