@@ -1,7 +1,31 @@
-export const createMenu = ([table, stats]) => {
-  return `
+import {createElement} from "../utils";
+
+export default class Menu {
+  constructor([table, stats]) {
+    this._table = table;
+    this._stats = stats;
+    this._element = null;
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
+  }
+
+  getTemplate() {
+    return `<h2 class="visually-hidden">Switch trip view</h2>
      <nav class="trip-controls__trip-tabs  trip-tabs">
-       <a class="trip-tabs__btn  ${table.status ? `trip-tabs__btn--active` : ``}" href="#">${table.title}</a>
-       <a class="trip-tabs__btn ${stats.status ? `trip-tabs__btn--active` : ``}" href="#">${stats.title}</a>
+       <a class="trip-tabs__btn  ${this._table.status ? `trip-tabs__btn--active` : ``}" href="#">${this._table.title}</a>
+       <a class="trip-tabs__btn ${this._stats.status ? `trip-tabs__btn--active` : ``}" href="#">${this._stats.title}</a>
      </nav>`;
-};
+  }
+
+}

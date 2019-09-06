@@ -1,12 +1,32 @@
-export const createSortForm = () => {
-  return `
-    <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
+import {createElement} from "../utils";
+
+export default class SortForm {
+  constructor() {
+    this._element = null;
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    if (this._element) {
+      this._element = null;
+    }
+  }
+
+  getTemplate() {
+    return `<h2 class="visually-hidden">Trip events</h2>
+      <form class="trip-events__trip-sort  trip-sort" action="#" method="get">
       <span class="trip-sort__item  trip-sort__item--day">Day</span>
 
-      <div class="trip-sort__item  trip-sort__item--event">
+        <div class="trip-sort__item  trip-sort__item--event">
         <input id="sort-event" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-event" checked>
         <label class="trip-sort__btn" for="sort-event">Event</label>
-      </div>
+        </div>
 
        <div class="trip-sort__item  trip-sort__item--time">
          <input id="sort-time" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-time">
@@ -18,7 +38,7 @@ export const createSortForm = () => {
          </label>
          </div>
 
-         <div class="trip-sort__item  trip-sort__item--price">
+       <div class="trip-sort__item  trip-sort__item--price">
            <input id="sort-price" class="trip-sort__input  visually-hidden" type="radio" name="trip-sort" value="sort-price">
            <label class="trip-sort__btn" for="sort-price">
             Price
@@ -30,4 +50,5 @@ export const createSortForm = () => {
 
          <span class="trip-sort__item  trip-sort__item--offers">Offers</span>
     </form>`;
-};
+  }
+}
