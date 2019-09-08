@@ -1,25 +1,12 @@
-import {createElement} from "../utils";
+import AbstractComponent from "./abstract-component";
 
-export default class Trip {
+export default class Trip extends AbstractComponent {
   constructor({type, city, time, price}) {
+    super();
     this._type = type;
     this._city = city;
     this._time = time;
     this._price = price;
-    this._element = null;
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    if (this._element) {
-      this._element = null;
-    }
   }
 
   getTemplate() {

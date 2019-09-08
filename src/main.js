@@ -15,6 +15,34 @@ const tripControlsElement = document
 const eventsElement = document.querySelector(`.trip-events`);
 const totalCostElement = document.querySelector(`.trip-info__cost-value`);
 
+class TripController {
+  constructor(container, events) {
+    this._container = container;
+    this._events = events;
+  }
+
+  init() {
+    this._events.forEach((event) => {
+      const trip = new Trip(event);
+      const tripEdit = new TripEditForm(event);
+
+      const onRollupBtnClick = () => {
+        this._container.replaceChild(tripEdit.getElement(), trip.getElement());
+        tripEdit.getElement().querySelector(`form`).addEventListener(`submit`, onFormEditSubmit);
+      };
+      const onFormEditSubmit = () => {
+        this._container.replaceChild(trip.getElement(), tripEdit.getElement());
+        trip.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onRollupBtnClick);
+      };
+
+      trip.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onRollupBtnClick);
+      render(this._container, trip.getElement(),
+          `beforeend`);
+    });
+  }
+}
+
+// по заданию нужно в класс закинуть только логику по отрисовку точек маршрута. а остальная отрисовка?
 const dates = eventList.map((event) => event.date).sort((a, b) => a - b)
   .map((it) => new Date(it).toDateString());
 const cities = eventList.map((event) => event.city);
@@ -26,24 +54,6 @@ const sortForm = new SortForm();
 render(eventsElement, new TripList().getElement(), `beforeend`);
 const tripListElement = document.querySelector(`.trip-events__list`);
 
-eventList.forEach((event) => {
-  const trip = new Trip(event);
-  const tripEdit = new TripEditForm(event);
-
-  const onRollupBtnClick = () => {
-    tripListElement.replaceChild(tripEdit.getElement(), trip.getElement());
-    tripEdit.getElement().querySelector(`form`).addEventListener(`submit`, onFormEditSubmit);
-  };
-  const onFormEditSubmit = () => {
-    tripListElement.replaceChild(trip.getElement(), tripEdit.getElement());
-    trip.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onRollupBtnClick);
-  };
-
-  trip.getElement().querySelector(`.event__rollup-btn`).addEventListener(`click`, onRollupBtnClick);
-  render(tripListElement, trip.getElement(),
-      `beforeend`);
-});
-
 const priceList = [];
 eventList.forEach((it) => {
   return priceList.push(it.price);
@@ -54,4 +64,7 @@ render(tripInfoElement, tripInfo.getElement(), `afterbegin`);
 render(tripControlsElement, menu.getElement(), `afterbegin`);
 render(tripControlsElement, filter.getElement(), `beforeend`);
 render(eventsElement, sortForm.getElement(), `afterbegin`);
+
+const tripController = new TripController(tripListElement, eventList);
+tripController.init();
 
