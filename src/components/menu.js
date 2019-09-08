@@ -1,6 +1,6 @@
 import AbstractComponent from "./abstract-component";
 
-export default class Menu extends AbstractComponent{
+export default class Menu extends AbstractComponent {
   constructor([table, stats]) {
     super();
     this._table = table;

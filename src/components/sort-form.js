@@ -1,6 +1,6 @@
 import AbstractComponent from "./abstract-component";
 
-export default class SortForm extends AbstractComponent{
+export default class SortForm extends AbstractComponent {
   constructor() {
     super();
   }

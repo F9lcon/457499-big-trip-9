@@ -1,6 +1,6 @@
 import AbstractComponent from "./abstract-component";
 
-export default class Filter extends AbstractComponent{
+export default class Filter extends AbstractComponent {
   constructor(list) {
     super();
     this._list = list;
