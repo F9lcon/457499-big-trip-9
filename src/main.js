@@ -6,7 +6,7 @@ import TripList from "./components/trip-list";
 import Trip from "./components/trip";
 import {eventList, menuList, filterList} from "./data";
 import Filter from "./components/filter";
-import {render} from "./utils";
+import {render, unrender} from "./utils";
 
 const tripInfoElement = document
   .querySelector(`.trip-main__trip-info.trip-info`);
@@ -15,13 +15,50 @@ const tripControlsElement = document
 const eventsElement = document.querySelector(`.trip-events`);
 const totalCostElement = document.querySelector(`.trip-info__cost-value`);
 
+
+const dates = eventList.map((event) => event.date).sort((a, b) => a - b)
+  .map((it) => new Date(it).toDateString());
+const cities = eventList.map((event) => event.city);
+const tripInfo = new TripInfo(cities, dates);
+const menu = new Menu(menuList);
+const filter = new Filter(filterList);
+
 class TripController {
   constructor(container, events) {
     this._container = container;
     this._events = events;
+    this._sort = new SortForm();
+  }
+
+  sortItems(sortType) {
+    while (document.querySelector(`.trip-events__item`)) {
+      unrender(document.querySelector(`.trip-events__item`));
+    }
+
+    switch (sortType) {
+      case `event`:
+        this._events.sort((a, b) => a.city > b.city);
+        this.init();
+        break;
+      case `time`:
+        this._events.sort((a, b) => a.time.start.hours > b.time.start.hours);
+        this.init();
+        break;
+      case `price`:
+        this._events.sort((a, b) => a.price - b.price);
+        this.init();
+        break;
+    }
   }
 
   init() {
+    this._sort.getElement().querySelector(`form`).addEventListener(`click`, (evt)=> {
+      if (evt.target.dataset.sort) {
+        this.sortItems(evt.target.dataset.sort);
+      }
+    });
+    render(eventsElement, this._sort.getElement(), `afterbegin`);
+
     this._events.forEach((event) => {
       const trip = new Trip(event);
       const tripEdit = new TripEditForm(event);
@@ -42,15 +79,6 @@ class TripController {
   }
 }
 
-// по заданию нужно в класс закинуть только логику по отрисовку точек маршрута. а остальная отрисовка?
-const dates = eventList.map((event) => event.date).sort((a, b) => a - b)
-  .map((it) => new Date(it).toDateString());
-const cities = eventList.map((event) => event.city);
-const tripInfo = new TripInfo(cities, dates);
-const menu = new Menu(menuList);
-const filter = new Filter(filterList);
-const sortForm = new SortForm();
-
 render(eventsElement, new TripList().getElement(), `beforeend`);
 const tripListElement = document.querySelector(`.trip-events__list`);
 
@@ -63,8 +91,6 @@ totalCostElement.innerHTML = priceList.reduce((a, b) => a + b);
 render(tripInfoElement, tripInfo.getElement(), `afterbegin`);
 render(tripControlsElement, menu.getElement(), `afterbegin`);
 render(tripControlsElement, filter.getElement(), `beforeend`);
-render(eventsElement, sortForm.getElement(), `afterbegin`);
 
 const tripController = new TripController(tripListElement, eventList);
 tripController.init();
-
