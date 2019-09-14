@@ -20,10 +20,10 @@ const render = (container, element, place) => {
   }
 };
 
-// const unrender = (element) => {
-//   if (element) {
-//     element.remove();
-//   }
-// };
+export const unrender = (element) => {
+  if (element) {
+    element.remove();
+  }
+};
 
 export {createElement, render};
