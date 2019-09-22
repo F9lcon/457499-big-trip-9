@@ -1,7 +1,7 @@
 const ONE_DAY = 86400000;
 const MAX_DAYS_BEFORE_TRIP = 10;
 const MAX_TRIP_PRICE = 1000;
-const EVENT_AMOUNT = 3;
+const EVENT_AMOUNT = 5;
 
 const getTimeData = () => ({
   start: Math.floor(Math.random() * 2400) / 100,
